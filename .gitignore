@@ -1,0 +1,14 @@
+# Environment files
+.env
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# IDE settings
+.vscode/
+.idea/
+
+# Alembic versions (optional if generated dynamically)
+alembic/__pycache__/
