@@ -6,7 +6,9 @@ from sqlalchemy import pool
 from alembic import context
 
 from app.models import Base
-from app.database import SQLALCHEMY_DATABASE_URL
+
+from ..app.config import settings
+from urllib.parse import quote_plus
 
 # --- NEW FIX: Disable interpolation in ConfigParser ---
 import configparser
@@ -21,6 +23,8 @@ config.file_config = raw_config
 # access to the values within the .ini file in use.
 config = context.config
 # override the sqlalchemy.url value from the .ini file
+SQLALCHEMY_DATABASE_URL=f'postgresql+psycopg2://{settings.DB_USER}:{quote_plus(settings.DB_PASSWORD)}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}'
+
 config.set_main_option('sqlalchemy.url', SQLALCHEMY_DATABASE_URL)
 
 # Interpret the config file for Python logging.

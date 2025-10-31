@@ -16,10 +16,14 @@ def login(user_credentials: OAuth2PasswordRequestForm=Depends(), db:Session= Dep
 # All the initialization parameters are extracted from the request.
 
 # def login(user_credentials: schemas.UserLogin, db:Session= Depends(database.get_db)):
+
+    if not user_credentials.username or not user_credentials.password:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Username and password are required")
+
     user=db.query(models.User).filter(models.User.email==user_credentials.username).first()
 
     if not user:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalidp credentials")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid credentials")
     
     if not utils.verify_password(user_credentials.password, user.password):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid credentials")
