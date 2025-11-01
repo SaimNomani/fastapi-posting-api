@@ -1,7 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from app.main_1 import Post
 from .database import TestingSessionLocal, engine
 from app.main import app
 from app.database import get_db, Base
