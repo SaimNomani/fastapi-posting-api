@@ -24,7 +24,7 @@ jobs:
         # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: ${{secrets.DB_PASSWORD}}
-          POSTGRESS_DB: ${{secrets.DB_NAME}}_test
+          POSTGRES_DB: ${{secrets.DB_NAME}}_test
         ports:
           - 5432:5432
         # Set health checks to wait until postgres has started
