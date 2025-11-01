@@ -44,7 +44,18 @@ jobs:
         run: pip install -r requirements.txt
       - name: debug
         run: echo "hello"
-      - name: installing pytest
-        run: pip install pytest
-      - name: running tests
-        run: pytest
+      - name: Wait for Postgres
+        run: |
+          until pg_isready -h postgres -p 5432; do
+            echo "Waiting for postgres..."
+            sleep 2
+          done
+
+      - name: Create test database
+        run: |
+          psql -h postgres -U $DB_USER -d postgres -c "CREATE DATABASE ${DB_NAME}_test;"
+        env:
+          PGPASSWORD: ${{ secrets.DB_PASSWORD }}
+
+      - name: Run tests
+        run: pytest -v
