@@ -48,7 +48,7 @@ jobs:
         run: pip install -r requirements.txt
       - name: Print DB variables
         run: |
-          echo "Database host: ${{ vars.HOST }}
+          echo "Database host: ${{vars.HOST}}
           echo "Database user: $DB_USER"  
       - name: test with pytest
         run: |
