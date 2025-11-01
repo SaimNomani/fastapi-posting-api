@@ -47,4 +47,9 @@ jobs:
       - name: test with pytest
         run: |
           pip install pytest
+          DB_HOST=postgres \
+          DB_NAME=${{secrets.DB_NAME}}_test \
+          DB_USER=${{secrets.DB_USER}} \
+          DB_PASSWORD=${{secrets.DB_PASSWORD}} \
+          DB_PORT=5432 \
           pytest
