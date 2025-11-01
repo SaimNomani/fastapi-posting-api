@@ -7,7 +7,7 @@ jobs:
     environment:
       name: testing
     env:
-      DB_HOST: postgres
+      DB_HOST: ${{vars.DB_HOST}}
       DB_PORT: 5432
       DB_PASSWORD: ${{vars.DB_PASSWORD}}
       DB_NAME: ${{vars.DB_NAME}}
