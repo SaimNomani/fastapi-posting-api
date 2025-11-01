@@ -52,18 +52,17 @@ jobs:
           DB_HOST: ${{ vars.DB_HOST }}
           DB_NAME: ${{ vars.DB_NAME }}
 
-      - name: Wait for Postgres
+      - name: Wait for PostgreSQL to be ready
         run: |
-          until pg_isready -h postgres -p 5432; do
+          echo "Waiting for PostgreSQL..."
+          for i in {1..15}; do
+            if pg_isready -h postgres -p 5432 -U postgres > /dev/null 2>&1; then
+              echo "PostgreSQL is ready!"
+              break
+            fi
             echo "Waiting for postgres..."
-            sleep 2
+            sleep 5
           done
-
-      - name: Create test database
-        run: |
-          psql -h postgres -U $DB_USER -d postgres -c "CREATE DATABASE ${DB_NAME}_test;"
-        env:
-          PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
       - name: Run tests
         run: pytest -v
